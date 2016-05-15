@@ -1,11 +1,20 @@
-from framework import Hand
+from framework import Hand, Deck
 
 
 class Player(object):
-    def __init__(self, name, credits=100, hand=Hand()):
+    def __init__(self, name, credits=100, hand=None, deck=None):
         self.name = name
         self.credits = credits
-        self.hand = hand
+
+        if deck is None:
+            self.deck = Deck()
+        else:
+            self.deck = deck
+
+        if hand is None:
+            self.hand = Hand(deck=self.deck)
+        else:
+            self.hand = hand
         
     def bet(self, amount):
         if amount > self.credits:
