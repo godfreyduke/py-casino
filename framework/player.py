@@ -1,4 +1,5 @@
-from cards import Hand
+from framework import Hand
+
 
 class Player(object):
     def __init__(self, name, credits=100, hand=Hand()):
@@ -10,7 +11,8 @@ class Player(object):
         if amount > self.credits:
             raise ValueError('Not enough credits')
         else:
-            self.credits = self.credits - amount        
+            self.credits -= amount
+
 
 class Dealer(Player):
     def __init__(self):

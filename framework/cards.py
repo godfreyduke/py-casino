@@ -29,7 +29,7 @@ class Card(object):
         return self._discarded
 
 
-class Deck:
+class Deck(object):
     def __init__(self, number_of_decks=1):
         suits = ['hearts', 'diamonds', 'clubs', 'spades']
         faces = {'Ace': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 10,
@@ -56,7 +56,7 @@ class Deck:
         return len(self.deck)
 
 
-class Hand:
+class Hand(object):
     def __init__(self, deck=None):
         self.hand = []
         self.deck = deck
