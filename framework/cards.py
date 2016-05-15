@@ -65,8 +65,11 @@ class Hand(object):
     def __str__(self):
         return str([str(x) for x in self.hand])
 
-    def new_deck(self, deck):
-        self.deck = deck
+    def new_deck(self, deck=None):
+        if deck is None:
+            self.deck = Deck()
+        else:
+            self.deck = deck
 
     def draw(self, deck=None, times=1):
         if deck is None and self.deck is None:
