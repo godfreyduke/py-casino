@@ -4,34 +4,66 @@ from types import ListType
 
 class Card(object):
     def __init__(self, suit, name, value):
+        """Card Object
+
+        This Object holds the properties of a card, which is a child of a Deck.
+
+        Args:
+            suit (string): The suit of the card. (Spade, Club, Diamond, Heart)
+            name (string): The label for the card. (Ace, 2, Queen, King)
+            value (integer): The numerical value of the card.
+
+        """
         self.suit = suit
         self.name = name
         self.value = value
         self._flagged = False
         self._discarded = False
-        self.extra = {}
 
     def __str__(self):
         return self.name + ' of ' + self.suit
 
     def is_flagged(self):
+        """Check if the card is currently flagged.
+
+        Returns:
+            True if flagged.
+            False if not flagged.
+        """
         return self._flagged
 
     def flag(self):
+        """Mark the card.
+
+        Sets the flag on the card to True.
+        """
         self._flagged = True
 
     def unflag(self):
+        """Unmark the card.
+
+        Sets the flag on the card to False."""
         self._flagged = False
 
     def discard(self):
+        """Mark the card as discared."""
         self._discarded = True
 
     def is_discarded(self):
+        """Check if the card has been discarded."""
         return self._discarded
 
 
 class Deck(object):
-    def __init__(self, number_of_decks=1):
+    def __init__(self, number_of_decks=1, auto_shuffle=True):
+        """Deck object
+
+        This object holds all methods related to Deck operations. This object is the parent to many Cards.
+
+        Args:
+            number_of_decks: (Integer) The number of decks that will be included.
+            auto_shuffle: (Boolean[True]) If the deck should be shuffled after it is created.
+        """
         suits = ['hearts', 'diamonds', 'clubs', 'spades']
         faces = {'Ace': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 10,
                  'Queen': 10, 'King': 10}
@@ -41,19 +73,27 @@ class Deck(object):
                 for suit in suits:
                     self.deck.append(Card(name=face, suit=suit, value=faces[face]))
 
-        self.shuffle(7)
+        if auto_shuffle:
+            self.shuffle(7)
 
     def __str__(self):
         return str([str(x) for x in self.deck])
 
     def shuffle(self, times=1):
+        """Shuffle the deck"""
         for i in xrange(times):
             random.shuffle(self.deck)
 
     def draw(self):
+        """Draw a card off the top of the deck."""
         return self.deck.pop(0)
 
     def cards_remaining(self):
+        """Check the number of cards left in the deck.
+
+        Returns:
+            The number of cards left in the deck.
+        """
         return len(self.deck)
 
 
