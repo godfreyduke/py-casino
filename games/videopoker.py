@@ -16,7 +16,7 @@ class VideoPoker:
         return self.show()
 
     def discard(self, indicies):
-        self.hand.discard(indicies)
+        self.hand.discard(index=indicies)
         self.hand.draw(times=len(indicies))
         return self.show()
 

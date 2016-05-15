@@ -1,4 +1,5 @@
 import random
+from types import ListType
 
 
 class Card(object):
@@ -77,10 +78,15 @@ class Hand(object):
     def new_hand(self):
         self.hand = []
 
-    def discard(self, number_of_cards=1, index=None):
+    def discard(self, index=None, number_of_cards=1):
         if index is not None:
-            self.hand[index].discard()
-            self.hand.pop(index)
+            if type(index) is ListType:
+                for pos in index:
+                    self.hand[pos].discard()
+                    self.hand.pop(pos)
+            else:
+                self.hand[index].discard()
+                self.hand.pop(index)
         elif number_of_cards is not None:
             for i in range(0, number_of_cards):
                 self.hand[0].discard()
