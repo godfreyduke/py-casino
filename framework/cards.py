@@ -1,28 +1,32 @@
 import random
 
 
-class Card:
-    faces = {'Ace': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 10,
-             'Queen': 10, 'King': 10}
-
-    def __init__(self, card):
-        self.suit = card[1]
-        self.card = card[0]
-        self.flagged = False
+class Card(object):
+    def __init__(self, suit, name, value):
+        self.suit = suit
+        self.name = name
+        self.value = value
+        self._flagged = False
+        self._discarded = False
+        self.extra = {}
 
     def __str__(self):
-        return self.card + ' of ' + self.suit
+        return self.name + ' of ' + self.suit
+
+    def is_flagged(self):
+        return self._flagged
 
     def flag(self):
-        self.flagged = True
+        self._flagged = True
 
-    @property
-    def value(self):
-        return self.faces.get(self.card, self.card)
+    def unflag(self):
+        self._flagged = False
 
-    @property
-    def suit(self):
-        return self.suit
+    def discard(self):
+        self._discarded = True
+
+    def is_discarded(self):
+        return self._discarded
 
 
 class Deck:
@@ -34,7 +38,9 @@ class Deck:
         for i in xrange(number_of_decks):
             for face in faces:
                 for suit in suits:
-                    self.deck.append(Card([face, suit]))
+                    self.deck.append(Card(name=face, suit=suit, value=faces[face]))
+
+        self.shuffle(7)
 
     def __str__(self):
         return str([str(x) for x in self.deck])
@@ -51,30 +57,36 @@ class Deck:
 
 
 class Hand:
-    def __init__(self):
+    def __init__(self, deck=None):
         self.hand = []
+        self.deck = deck
 
     def __str__(self):
         return str([str(x) for x in self.hand])
 
-    def draw_from(self, deck, times=1):
+    def new_deck(self, deck):
+        self.deck = deck
+
+    def draw(self, deck=None, times=1):
+        if deck is None and self.deck is None:
+            return False
+
         for i in xrange(times):
-            self.hand.append(deck.draw())
+            self.hand.append(self.deck.draw())
 
     def new_hand(self):
         self.hand = []
 
-    def discard(self, indicies):
-        remaining = []
-
-        for index in indicies:
-            self.hand[index].flag()
-
-        for card in self.hand:
-            if not card.flagged:
-                remaining.append(card)
-
-        self.hand = remaining
+    def discard(self, number_of_cards=1, index=None):
+        if index is not None:
+            self.hand[index].discard()
+            self.hand.pop(index)
+        elif number_of_cards is not None:
+            for i in range(0, number_of_cards):
+                self.hand[0].discard()
+                self.hand.pop(0)
+        else:
+            self.new_hand()
 
     @property
     def value(self):
