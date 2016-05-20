@@ -102,6 +102,13 @@ class Hand(object):
         self.hand = []
         self.deck = deck
 
+    def __list__(self):
+        return self.hand
+
+    def __iter__(self):
+        for card in self.hand:
+            yield card
+
     def __str__(self):
         return str([str(x) for x in self.hand])
 
