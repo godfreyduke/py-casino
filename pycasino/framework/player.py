@@ -1,4 +1,4 @@
-from framework import Hand, Deck
+from cards import Hand, Deck
 
 
 class Player(object):
