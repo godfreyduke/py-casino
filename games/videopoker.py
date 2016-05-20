@@ -1,6 +1,7 @@
-from framework import Deck, Hand
-from framework.terminal import Terminal
 from types import IntType
+
+from pycasino.framework.cards import Deck, Hand
+from pycasino.framework.terminal import Terminal
 
 
 class VideoPoker:
@@ -33,9 +34,8 @@ class VideoPoker:
         return self.hand.cards
 
 
-if __name__ == "__main__":
+def run():
     poker = VideoPoker()
-
     poker.start()
     discard_1_input = raw_input("Pick cards to discard... (ex. 1 4):\n")
 
@@ -53,3 +53,7 @@ if __name__ == "__main__":
     Terminal.clear_screen()
     print "Here are your new cards: \n"
     poker.show()
+
+
+if __name__ == "__main__":
+    run()
