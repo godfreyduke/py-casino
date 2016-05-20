@@ -109,6 +109,9 @@ class Hand(object):
         for card in self.hand:
             yield card
 
+    def __len__(self):
+        return len(self.hand)
+
     def __str__(self):
         return str([str(x) for x in self.hand])
 
